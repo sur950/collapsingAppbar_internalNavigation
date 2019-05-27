@@ -1,25 +1,48 @@
 import 'package:flutter/material.dart';
 
 class Logo extends StatefulWidget {
-  final double logoTopValue;
-  final double logoLeftValue;
-  final double logoWidthHeight;
-
-  Logo({this.logoTopValue, this.logoLeftValue, this.logoWidthHeight});
-
+  dynamic onValueChange;
   @override
-  _LogoState createState() => _LogoState();
+  LogoState createState() => LogoState();
 }
 
-class _LogoState extends State<Logo> {
+class LogoState extends State<Logo> {
+  double previousOffsetValue = 0.0;
+  double logoWidthHeight = 120.0;
+  double logoLeftValue = 130.0;
+  double logoTopValue = 50.0;
+  @override
+  void initState() {
+    widget.onValueChange = (ScrollController _scrollController) {
+      print(_scrollController.offset);
+      setState(() {
+        if (_scrollController.offset >= previousOffsetValue &&
+            _scrollController.offset <= 35 &&
+            _scrollController.offset >= 0) {
+          logoWidthHeight = 120 - _scrollController.offset;
+          logoLeftValue = 130 + (_scrollController.offset / 2);
+          logoTopValue = 50 - _scrollController.offset / 2;
+        } else if (_scrollController.offset < previousOffsetValue &&
+            _scrollController.offset <= 35 &&
+            _scrollController.offset >= 0) {
+          logoWidthHeight = 85 + (35 - _scrollController.offset);
+          logoLeftValue = 165 - (35 - _scrollController.offset / 2);
+          logoTopValue = 32.5 + (35 - _scrollController.offset) / 2;
+        }
+        previousOffsetValue = _scrollController.offset;
+      });
+    };
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: widget.logoTopValue,
-      left: widget.logoLeftValue,
+      top: logoTopValue,
+      left: logoLeftValue,
       child: Container(
-        height: widget.logoWidthHeight,
-        width: widget.logoWidthHeight,
+        height: logoWidthHeight,
+        width: logoWidthHeight,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(width: 3.0, color: Color(0xFFB9AA67)),

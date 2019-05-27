@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:internal_nacigation_test/useful.dart';
+import 'package:internal_nacigation_test/bottom_navigation.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chant',
+      title: 'Test',
       debugShowCheckedModeBanner: false,
       home: CustomBottomNavigationBar(),
     );
